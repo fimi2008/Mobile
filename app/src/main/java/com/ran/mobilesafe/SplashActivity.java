@@ -14,6 +14,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +49,7 @@ public class SplashActivity extends Activity {
 
     private TextView tv_version;
     private TextView tv_down;
+    private RelativeLayout rl_root;
 
     private String versionName;     // 服务器新版本名
     private int versionCode;        // 服务器新版本号
@@ -91,6 +94,8 @@ public class SplashActivity extends Activity {
 
         tv_version.setText("版本名:" + getVersionName());
 
+        rl_root = (RelativeLayout) findViewById(R.id.rl_root);
+
         // 判断是否需要自动更新
         preferences = getSharedPreferences(ParameterUtils.SP_NAME, MODE_PRIVATE);
         if (preferences.getBoolean(ParameterUtils.AUTO_UPDATE, true)) {
@@ -98,6 +103,11 @@ public class SplashActivity extends Activity {
         } else {
             myHandler.sendEmptyMessageDelayed(CODE_ENTER_HOME, ParameterUtils.SPLASH_TIME); // 延迟2秒发送
         }
+
+        // 渐变的动画效果
+        AlphaAnimation anim = new AlphaAnimation(0.3f, 1);
+        anim.setDuration(ParameterUtils.SPLASH_TIME);
+        rl_root.startAnimation(anim);
     }
 
     /**

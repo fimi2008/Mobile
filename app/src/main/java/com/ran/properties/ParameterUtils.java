@@ -9,6 +9,7 @@ package com.ran.properties;
 public interface ParameterUtils {
     final long SPLASH_TIME = 2000; // 闪屏展示最短时间
     final String AUTO_UPDATE = "auto_update";   // 自动更新设置
+    final String CONFIGED = "configed";     // 手机防盗是否设置过
 
     final String SP_NAME = "config";    //SharedPreferences名
 
