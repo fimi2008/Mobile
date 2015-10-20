@@ -17,12 +17,12 @@
             android:text="安全号码" />
 
         <TextView
+            android:id="@+id/tv_safephone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
-            android:text="13000"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
@@ -43,12 +43,12 @@
             android:text="防盗保护是否开启" />
 
         <ImageView
+            android:id="@+id/iv_protect"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:src="@mipmap/lock" />
+            android:layout_marginRight="5dp" />
 
     </RelativeLayout>
 
@@ -60,10 +60,10 @@
 
     <TextView
         style="@style/ContentStyle"
-        android:onClick="reset"
-        android:clickable="true"
         android:layout_width="match_parent"
         android:background="@drawable/shape_selector"
+        android:clickable="true"
+        android:onClick="reset"
         android:text="重启进入设置向导" />
 
     <ImageView
@@ -73,16 +73,16 @@
         android:background="@mipmap/listview_divider" />
 
     <TextView
-        android:background="#5000"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="功能简介"
-        android:padding="3dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginTop="5dp"
+        android:background="#5000"
+        android:padding="3dp"
+        android:text="功能简介"
         android:textColor="@color/black"
-        android:textSize="18sp"/>
+        android:textSize="18sp" />
 
     <TextView
         style="@style/ContentStyle"

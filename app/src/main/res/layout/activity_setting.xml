@@ -8,7 +8,7 @@
         style="@style/TitleStyle"
         android:text="设置中心"/>
 
-    <com.ran.view.SettingItemView
+    <com.ran.mobilesafe.view.SettingItemView
         android:id="@+id/siv_update"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
