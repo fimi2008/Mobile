@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
@@ -29,6 +30,9 @@ public class BootCompleteReceiver extends BroadcastReceiver {
                 String currentSim = tm.getSimSerialNumber();
                 if (!sim.equals(currentSim)) {
                     System.out.println("sim卡改变,发送报警短信");
+                    String phone = mPref.getString(ParameterUtils.SAFE_PHONE, "");
+                    SmsManager smsManager = SmsManager.getDefault();
+                    smsManager.sendTextMessage(phone, null, "注意:该号码正在使用您的手机!", null, null);
                 } else {
                     System.out.println("手机安全");
                 }

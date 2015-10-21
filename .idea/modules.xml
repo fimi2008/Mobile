@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/mobilesafe.iml" filepath="$PROJECT_DIR$/mobilesafe.iml" />
+      <module fileurl="file://$PROJECT_DIR$/手机定位/手机定位.iml" filepath="$PROJECT_DIR$/手机定位/手机定位.iml" />
       <module fileurl="file://$PROJECT_DIR$/读取联系人/读取联系人.iml" filepath="$PROJECT_DIR$/读取联系人/读取联系人.iml" />
     </modules>
   </component>
