@@ -11,6 +11,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/一键锁屏" />
             <option value="$PROJECT_DIR$/手机定位" />
             <option value="$PROJECT_DIR$/读取联系人" />
           </set>

@@ -60,7 +60,8 @@ public class HomeActivity extends Activity {
                     case 8:// 设置中心
                         startActivity(new Intent(HomeActivity.this, SettingActivity.class));
                         break;
-                    case 7:
+                    case 7:// 高级工具
+                        startActivity(new Intent(HomeActivity.this, AToolsActivity.class));
                         break;
                     case 6:
                         break;

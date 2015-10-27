@@ -31,7 +31,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -96,6 +98,8 @@ public class SplashActivity extends Activity {
         tv_version.setText("版本名:" + getVersionName());
 
         rl_root = (RelativeLayout) findViewById(R.id.rl_root);
+
+        copyDB("address.db"); // copy手机归属地数据库
 
         // 判断是否需要自动更新
         preferences = getSharedPreferences(ParameterUtils.SP_NAME, MODE_PRIVATE);
@@ -306,5 +310,41 @@ public class SplashActivity extends Activity {
             e.printStackTrace();
         }
         return -1;
+    }
+
+    /**
+     * copy 数据库
+     */
+    private void copyDB(String dbName) {
+        File destFile = new File(getFilesDir(), dbName); // 要拷贝的目标地址
+
+        if (destFile.exists()) {
+            System.out.println("数据库:" + dbName + ",已经存在了!");
+            return;
+        }
+        FileOutputStream out = null;
+        InputStream in = null;
+        try {
+            in = getAssets().open(dbName);
+            out = new FileOutputStream(destFile);
+            int len = 0;
+            byte[] buffer = new byte[1024];
+            while ((len = in.read(buffer)) != -1) {
+                out.write(buffer, 0, len);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (null != in) {
+                    in.close();
+                }
+                if (null != out) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
