@@ -15,7 +15,7 @@ import com.ran.mobilesafe.properties.ParameterUtils;
  * 作者: wangxiang on 15/10/19 16:02
  * 邮箱: vonshine15@163.com
  */
-public abstract  class BaseSetupActivity extends Activity{
+public abstract class BaseSetupActivity extends Activity{
     private GestureDetector mGesture;
     public SharedPreferences mPref;
 

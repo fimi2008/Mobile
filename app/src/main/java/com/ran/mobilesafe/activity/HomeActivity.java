@@ -73,7 +73,8 @@ public class HomeActivity extends Activity {
                         break;
                     case 2:
                         break;
-                    case 1:
+                    case 1: // 通讯卫士
+                        startActivity(new Intent(HomeActivity.this, CallSafeActivity.class));
                         break;
                     case 0:// 手机防盗
                         showPwdDialog();

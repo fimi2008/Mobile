@@ -2,18 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ran.mobilesafe" >
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
-    <uses-permission android:name="android.permission.SEND_SMS"/>
-    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:allowBackup="true"
@@ -29,34 +29,44 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.HomeActivity"/>
-        <activity android:name=".activity.SettingActivity"/>
-        <activity android:name=".activity.LostFindActivity"/>
-        <activity android:name=".activity.Setup1Activity"/>
-        <activity android:name=".activity.Setup2Activity"/>
-        <activity android:name=".activity.Setup3Activity"/>
-        <activity android:name=".activity.Setup4Activity"/>
-        <activity android:name=".activity.ContactActivity"/>
-        <activity android:name=".activity.AToolsActivity"/>
-        <activity android:name=".activity.AddressActivity"/>
-        <activity android:name=".activity.DragViewActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
-        <receiver android:name=".receiver.BootCompleteReceiver">
+        <activity android:name=".activity.HomeActivity" />
+        <activity android:name=".activity.SettingActivity" />
+        <activity android:name=".activity.LostFindActivity" />
+        <activity android:name=".activity.Setup1Activity" />
+        <activity android:name=".activity.Setup2Activity" />
+        <activity android:name=".activity.Setup3Activity" />
+        <activity android:name=".activity.Setup4Activity" />
+        <activity android:name=".activity.ContactActivity" />
+        <activity android:name=".activity.AToolsActivity" />
+        <activity android:name=".activity.AddressActivity" />
+        <activity
+            android:name=".activity.DragViewActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <receiver android:name=".receiver.BootCompleteReceiver" >
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".receiver.SmsReceiver">
-            <intent-filter android:priority="2147383647"><!--int的最大值作为优先级最高-->
-                <action android:name="android.provoider.Telephony.SMS_RECEVED"/>
+        <receiver android:name=".receiver.SmsReceiver" >
+            <intent-filter android:priority="2147383647" > <!-- int的最大值作为优先级最高 -->
+                <action android:name="android.provoider.Telephony.SMS_RECEVED" />
             </intent-filter>
         </receiver>
-       <!-- <receiver android:name=".receiver.OutCallReceiver">
+        <!--
+        <receiver android:name=".receiver.OutCallReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL"/>
             </intent-filter>
-        </receiver>-->
-        <service android:name=".service.LocationService"/>
-        <service android:name=".service.AddressService"/>
+        </receiver>
+        -->
+        <service android:name=".service.LocationService" />
+        <service android:name=".service.AddressService" />
+
+        <activity
+            android:name=".activity.CallSafeActivity"
+            android:label="@string/title_activity_call_safe" >
+        </activity>
     </application>
 
 </manifest>
