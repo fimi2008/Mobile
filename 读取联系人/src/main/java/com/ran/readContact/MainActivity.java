@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -49,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
         if (null != rawCursor) {
             while (rawCursor.moveToNext()) {
                 String contactId = rawCursor.getString(0);
+                if (TextUtils.isEmpty(contactId)){
+                    continue;
+                }
                 Map<String, String> map = new HashMap<String, String>(2);
                 // 根据contact_id从data表中查询出相应的电话号码和联系人名称, 实际上查询的是视图view_data
                 Cursor dataCursor = getContentResolver().query(dataUri, new String[]{"data1", "mimetype"}, "contact_id = ?", new String[]{contactId}, null);

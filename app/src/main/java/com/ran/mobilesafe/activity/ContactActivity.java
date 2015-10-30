@@ -5,8 +5,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -29,28 +33,44 @@ public class ContactActivity extends Activity {
     private ListView lv;
     private List<Map<String, String>> datas;
 
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            llPd.setVisibility(View.INVISIBLE); // 隐藏加载中...
+            lv.setAdapter(new SimpleAdapter(ContactActivity.this, datas, R.layout.contact_list_item, new String[]{"name", "phone"},
+                    new int[]{R.id.tv_name, R.id.tv_phone}));
+
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    String phone = datas.get(position).get("phone"); // 读取当前item的电话号码
+                    // 将数据放在intent中返回给上一个界面
+                    setResult(Activity.RESULT_OK, new Intent().putExtra("phone", phone));
+
+                    finish();
+                }
+            });
+        }
+    };
+    private LinearLayout llPd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact);
 
+        // 显示加载中...
+        llPd = (LinearLayout) findViewById(R.id.ll_pb);
+        llPd.setVisibility(View.VISIBLE);
         lv = (ListView) findViewById(R.id.lv_list);
 
-        datas = readContact();
-
-        lv.setAdapter(new SimpleAdapter(this, datas, R.layout.contact_list_item, new String[]{"name", "phone"},
-                new int[]{R.id.tv_name, R.id.tv_phone}));
-
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        new Thread(){
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String phone = datas.get(position).get("phone"); // 读取当前item的电话号码
-                // 将数据放在intent中返回给上一个界面
-                setResult(Activity.RESULT_OK, new Intent().putExtra("phone", phone));
-
-                finish();
+            public void run() {
+                datas = readContact();
+                handler.sendEmptyMessage(0);
             }
-        });
+        }.start();
     }
 
     /**
@@ -73,22 +93,24 @@ public class ContactActivity extends Activity {
         if (null != rawCursor) {
             while (rawCursor.moveToNext()) {
                 String contactId = rawCursor.getString(0);
-                Map<String, String> map = new HashMap<String, String>(2);
-                // 根据contact_id从data表中查询出相应的电话号码和联系人名称, 实际上查询的是视图view_data
-                Cursor dataCursor = getContentResolver().query(dataUri, new String[]{"data1", "mimetype"}, "contact_id = ?", new String[]{contactId}, null);
-                if (null != dataCursor) {
-                    while (dataCursor.moveToNext()) {
-                        String data1 = dataCursor.getString(0);
-                        String mimetype = dataCursor.getString(1);
-                        if ("vnd.android.cursor.item/phone_v2".equals(mimetype)) {
-                            map.put("phone", data1);
-                        } else if ("vnd.android.cursor.item/name"
-                                .equals(mimetype)) {
-                            map.put("name", data1);
+                if (!TextUtils.isEmpty(contactId)){
+                    Map<String, String> map = new HashMap<String, String>(2);
+                    // 根据contact_id从data表中查询出相应的电话号码和联系人名称, 实际上查询的是视图view_data
+                    Cursor dataCursor = getContentResolver().query(dataUri, new String[]{"data1", "mimetype"}, "contact_id = ?", new String[]{contactId}, null);
+                    if (null != dataCursor) {
+                        while (dataCursor.moveToNext()) {
+                            String data1 = dataCursor.getString(0);
+                            String mimetype = dataCursor.getString(1);
+                            if ("vnd.android.cursor.item/phone_v2".equals(mimetype)) {
+                                map.put("phone", data1);
+                            } else if ("vnd.android.cursor.item/name"
+                                    .equals(mimetype)) {
+                                map.put("name", data1);
+                            }
                         }
+                        list.add(map);
+                        dataCursor.close();
                     }
-                    list.add(map);
-                    dataCursor.close();
                 }
             }
             rawCursor.close();

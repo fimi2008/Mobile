@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.ran.mobilesafe.bean.BlackNumberInfo;
+import com.ran.mobilesafe.bean.PageResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +79,7 @@ public class BlackNumberDao {
      * 根据手机号码查询该号码的拦截模式
      *
      * @param number
-     * @return
+     * @return int
      */
     public int getModeByNumber(String number) {
         int mode = 0;
@@ -96,7 +97,7 @@ public class BlackNumberDao {
     /**
      * 查询所有的黑名单号码
      *
-     * @return
+     * @return List<BlackNumberInfo>
      */
     public List<BlackNumberInfo> queryAll() {
         SQLiteDatabase db = helper.getReadableDatabase();
@@ -113,5 +114,44 @@ public class BlackNumberDao {
         cursor.close();
         db.close();
         return list;
+    }
+
+    /**
+     * 分页查询黑名单号码
+     *
+     * @param page     当前页
+     * @param pageSize 每页展示数据条数
+     * @return PageResult<BlackNumberInfo>
+     * <p/>
+     * limit:限制当前多少条数据
+     * offset:从第几条开始
+     */
+    public PageResult<BlackNumberInfo> queryPar(int page, int pageSize) {
+        page = page <= 0 ? 1 : page;
+        int start = (page - 1) * pageSize;
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select count(*) from blackNumber ", null);
+        cursor.moveToNext();
+        int total = cursor.getInt(0);
+        cursor.close();
+        List<BlackNumberInfo> datas = null;
+        if (total > 0){
+            cursor = db.rawQuery("select number,mode from blackNumber limit ? offset ?",
+                    new String[]{String.valueOf(pageSize), String.valueOf(start)});
+            datas = new ArrayList<BlackNumberInfo>();
+            BlackNumberInfo info;
+            while (cursor.moveToNext()) {
+                info = new BlackNumberInfo();
+                info.setNumber(cursor.getString(0));
+                info.setMode(cursor.getInt(1));
+
+                datas.add(info);
+            }
+        }
+        cursor.close();
+        db.close();
+
+        PageResult<BlackNumberInfo> result = new PageResult<BlackNumberInfo>(datas, total, page, pageSize);
+        return result;
     }
 }
