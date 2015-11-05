@@ -27,6 +27,17 @@ public class PageResult<T> {
         }
     }
 
+    public PageResult(List<T> datas, int total, int pageSize) {
+        this.datas = datas;
+        this.total = total;
+        this.pageSize = pageSize;
+        if (total%pageSize == 0){
+            this.totalPage = total/pageSize;
+        }else{
+            this.totalPage = total/pageSize + 1;
+        }
+    }
+
     public List<T> getDatas() {
         return datas;
     }

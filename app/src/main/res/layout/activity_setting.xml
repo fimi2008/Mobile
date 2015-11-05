@@ -37,4 +37,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
+
+    <com.ran.mobilesafe.view.SettingItemView
+        android:id="@+id/siv_black_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        ran:mtitle="黑名单拦截设置"
+        ran:desc_on="黑名单拦截已开启"
+        ran:desc_off="黑名单拦截已关闭"
+        />
 </LinearLayout>

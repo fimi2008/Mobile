@@ -63,15 +63,16 @@ public class HomeActivity extends Activity {
                     case 7:// 高级工具
                         startActivity(new Intent(HomeActivity.this, AToolsActivity.class));
                         break;
-                    case 6:
+                    case 6: // 缓存清理
                         break;
-                    case 5:
+                    case 5: // 手机杀毒
                         break;
-                    case 4:
+                    case 4: // 流量统计
                         break;
-                    case 3:
+                    case 3:// 进程管理
                         break;
-                    case 2:
+                    case 2:// 软件管理
+                        startActivity(new Intent(HomeActivity.this, AppManagerActivity.class));
                         break;
                     case 1: // 通讯卫士
                         startActivity(new Intent(HomeActivity.this, CallSafeActivity.class));

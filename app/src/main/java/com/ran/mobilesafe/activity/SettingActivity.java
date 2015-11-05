@@ -11,6 +11,7 @@ import android.view.View;
 import com.ran.mobilesafe.R;
 import com.ran.mobilesafe.properties.ParameterUtils;
 import com.ran.mobilesafe.service.AddressService;
+import com.ran.mobilesafe.service.CallSafeService;
 import com.ran.mobilesafe.utils.ServiceStatusUtils;
 import com.ran.mobilesafe.view.SettingClickView;
 import com.ran.mobilesafe.view.SettingItemView;
@@ -26,6 +27,7 @@ public class SettingActivity extends Activity {
     private SettingItemView sivAddress; // 归属地显示设置
     private SettingClickView scvAddressStyle;   // 修改风格
     private SettingClickView scvAddressLocation; // 修改归属地显示位置
+    private SettingItemView siv_black_number;  // 黑名单拦截设置
     private SharedPreferences config;
     private String[] items = new String[]{"半透明", "活力橙", "卫士蓝", "金属灰", "苹果绿"};
     private int style;
@@ -44,6 +46,35 @@ public class SettingActivity extends Activity {
         initAddressStyle();
 
         initAddressLocation();
+        
+        initBlackNumber();
+    }
+
+    /**
+     * 初始化黑名单拦截设置
+     */
+    private void initBlackNumber() {
+        siv_black_number = (SettingItemView) findViewById(R.id.siv_black_number);
+
+        boolean serviceRunning = ServiceStatusUtils.isServiceRunning(this, CallSafeService.class.getName());
+
+        siv_black_number.changeChecked(serviceRunning);
+
+        siv_black_number.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 判断checkbox的当前勾选状态
+                if (siv_black_number.isChecked()) {
+                    siv_black_number.changeChecked(false);
+                    // 停止黑名单拦截
+                    stopService(new Intent(SettingActivity.this, CallSafeService.class));
+                } else {
+                    siv_black_number.changeChecked(true);
+                    // 开启黑名单拦截
+                    startService(new Intent(SettingActivity.this, CallSafeService.class));
+                }
+            }
+        });
     }
 
     /**

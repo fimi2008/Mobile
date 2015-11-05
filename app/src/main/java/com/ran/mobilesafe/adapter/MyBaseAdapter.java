@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * 自定义adapter
- *
+ * <p/>
  * 作者: wangxiang on 15/10/29 18:11
  * 邮箱: vonshine15@163.com
  */
@@ -15,6 +15,7 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter {
 
     public List<T> list;
     public Context mContext;
+
     public MyBaseAdapter() {
     }
 
@@ -25,12 +26,12 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return list.size();
+        return null == list ? 0 : list.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return list.get(position);
+        return null == list ? null : list.get(position);
     }
 
     @Override

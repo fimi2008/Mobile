@@ -135,7 +135,7 @@ public class BlackNumberDao {
         int total = cursor.getInt(0);
         cursor.close();
         List<BlackNumberInfo> datas = null;
-        if (total > 0){
+        if (total > 0) {
             cursor = db.rawQuery("select number,mode from blackNumber limit ? offset ?",
                     new String[]{String.valueOf(pageSize), String.valueOf(start)});
             datas = new ArrayList<BlackNumberInfo>();
@@ -147,11 +147,46 @@ public class BlackNumberDao {
 
                 datas.add(info);
             }
+            cursor.close();
         }
-        cursor.close();
+
         db.close();
 
         PageResult<BlackNumberInfo> result = new PageResult<BlackNumberInfo>(datas, total, page, pageSize);
+        return result;
+    }
+
+    /**
+     * 分批加载数据
+     *
+     * @param start 开始位置
+     * @param max   最多显示的条数
+     * @return PageResult<BlackNumberInfo>
+     */
+    public PageResult<BlackNumberInfo> queryLoading(int start, int max) {
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select count(*) from blackNumber ", null);
+        cursor.moveToNext();
+        int total = cursor.getInt(0);
+        cursor.close();
+        List<BlackNumberInfo> datas = null;
+        if (total > 0){
+            cursor = db.rawQuery("select number,mode from blackNumber order by _id desc limit ? offset ?",
+                    new String[]{String.valueOf(max), String.valueOf(start)});
+            datas = new ArrayList<BlackNumberInfo>();
+            BlackNumberInfo info;
+            while (cursor.moveToNext()) {
+                info = new BlackNumberInfo();
+                info.setNumber(cursor.getString(0));
+                info.setMode(cursor.getInt(1));
+
+                datas.add(info);
+            }
+            cursor.close();
+        }
+
+        db.close();
+        PageResult<BlackNumberInfo> result = new PageResult<BlackNumberInfo>(datas, total, max);
         return result;
     }
 }
