@@ -86,6 +86,7 @@ public class CallSafeActivity extends AppCompatActivity {
                     return;
                 }
 
+
                 BlackNumberInfo info = new BlackNumberInfo();
                 info.setNumber(number);
                 info.setMode(mode);
