@@ -4,7 +4,7 @@ import android.graphics.drawable.Drawable;
 
 /**
  * 应用描述
- *
+ * <p/>
  * 作者: wangxiang on 15/11/3 13:10
  * 邮箱: vonshine15@163.com
  */
@@ -15,6 +15,15 @@ public class AppInfo {
     private boolean userApp;    // 是否是用户app
     private boolean isRom;      // 是否安装在内存
     private String packageName; // 包名
+    private boolean isChecked;  // 是否被选中
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setIsChecked(boolean isChecked) {
+        this.isChecked = isChecked;
+    }
 
     public Drawable getIcon() {
         return icon;

@@ -70,6 +70,7 @@ public class HomeActivity extends Activity {
                     case 4: // 流量统计
                         break;
                     case 3:// 进程管理
+                        startActivity(new Intent(HomeActivity.this, TaskManagerActivity.class));
                         break;
                     case 2:// 软件管理
                         startActivity(new Intent(HomeActivity.this, AppManagerActivity.class));

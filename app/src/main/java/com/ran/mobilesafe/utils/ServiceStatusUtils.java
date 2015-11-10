@@ -20,7 +20,7 @@ public class ServiceStatusUtils {
     public static boolean isServiceRunning(Context context, String serviceName){
 
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningServiceInfo> runningServices = am.getRunningServices(100); // 获取系统所有正在运行的服务,最多返回100个
+        List<ActivityManager.RunningServiceInfo> runningServices = am.getRunningServices(200); // 获取系统所有正在运行的服务,最多返回100个
 
         for (ActivityManager.RunningServiceInfo info : runningServices){
             String className = info.service.getClassName();

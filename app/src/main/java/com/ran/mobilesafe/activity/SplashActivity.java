@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -101,6 +102,8 @@ public class SplashActivity extends Activity {
 
         copyDB("address.db"); // copy手机归属地数据库
 
+        createShortcut();
+
         // 判断是否需要自动更新
         preferences = getSharedPreferences(ParameterUtils.SP_NAME, MODE_PRIVATE);
         if (preferences.getBoolean(ParameterUtils.AUTO_UPDATE, true)) {
@@ -113,6 +116,29 @@ public class SplashActivity extends Activity {
         AlphaAnimation anim = new AlphaAnimation(0.3f, 1);
         anim.setDuration(ParameterUtils.SPLASH_TIME);
         rl_root.startAnimation(anim);
+    }
+
+    /**
+     * 创建快捷方式
+     */
+    private void createShortcut() {
+        Intent intent = new Intent();
+        intent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+        // 如果设置为true表示可以创建重复的快捷方式
+        intent.putExtra("duplicate", false);
+        /**
+         * 1.干什么(用途)
+         * 2.叫什么(快捷名称)
+         * 3.什么样(图标)
+         */
+        //Intent shortcut_intent = new Intent(this, HomeActivity.class); // 不能使用显示意图,必须使用隐式意图
+        Intent shortcut_intent = new Intent();
+        shortcut_intent.setAction("com.ran.home");
+        intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcut_intent);
+        intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "手机管家");
+        intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
+
+        sendBroadcast(intent);
     }
 
     /**

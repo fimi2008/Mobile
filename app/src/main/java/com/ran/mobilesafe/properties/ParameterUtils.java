@@ -16,6 +16,7 @@ public interface ParameterUtils {
     final String ADDRESS_STYLE = "address_style"; // 归属地弹框样式
     final String LASTX = "lastX";       // 最后一次x坐标
     final String LASTY = "lastY";       // 最后一次y坐标
+    final String IS_SHOW_SYSTEM = "is_show_system"; // 进程管理是否显示系统进程
 
     final String SP_NAME = "config";    //SharedPreferences名
 
